@@ -1,3 +1,5 @@
+##https://github.com/ionorg/ion-app-flutter/tree/master
+
 # ARG definition for building 
 ARG ubuntu_version
 ARG timezone
@@ -32,7 +34,7 @@ RUN apt-get update \
     && ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
     && dpkg-reconfigure -f noninteractive tzdata
 
-# requisites software of Flutter
+# Requisites software of Flutter
 RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list \
     && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
     && add-apt-repository ppa:maarten-fonville/android-studio
@@ -42,7 +44,7 @@ RUN apt-get update && \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# install AndroidSDK for building Android
+# Install AndroidSDK for building Android
 WORKDIR /usr/local
 RUN mkdir -p Android/sdk
 ENV ANDROID_SDK_ROOT /usr/local/Android/sdk
@@ -51,7 +53,7 @@ RUN wget -O sdk-tools.zip https://dl.google.com/android/repository/sdk-tools-lin
 RUN unzip sdk-tools.zip && rm sdk-tools.zip
 RUN mv tools Android/sdk/tools
 RUN cd Android/sdk/tools/bin && yes | ./sdkmanager --licenses
-RUN cd Android/sdk/tools/bin && ./sdkmanager "build-tools;29.0.2" "patcher;v4" "platform-tools" "platforms;android-29" "sources;android-29"
+RUN cd Android/sdk/tools/bin && ./sdkmanager "build-tools;34.0.0" "platform-tools" "platforms;android-33" "sources;android-33"
 ENV PATH "$PATH:/usr/local/Android/sdk/platform-tools"
 
 # Install Dart
